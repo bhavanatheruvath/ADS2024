@@ -60,6 +60,7 @@ void insert()
         new = (struct Node *)malloc(sizeof(struct Node));
         printf("Enter The data : ");
         scanf("%d", &new->data);
+        new->Next=NULL;
         current->Next = new;
         current = new;
     }
@@ -69,14 +70,15 @@ void insert()
         new = (struct Node *)malloc(sizeof(struct Node));
         printf("Enter The data : ");
         scanf("%d", &new->data);
+        new->Next=NULL;
         printf("enter the position : ");
         scanf("%d", &p);
-        for (temp = head; temp->Next != NULL; temp = temp->Next, c--)
+        for (temp = head; temp->Next != NULL; temp = temp->Next, p--)
         {
-            if (c == 2)
+            if (p == 2)
             {
-                temp->Next = new;
                 new->Next = temp->Next;
+                temp->Next = new;
                 current = new;
                 break;
             }
@@ -85,7 +87,10 @@ void insert()
             printf("No enough space in the list!");
     }
 }
-
+void delete()
+{
+    
+}
 void main()
 {
     int c;
