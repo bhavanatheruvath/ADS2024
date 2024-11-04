@@ -6,7 +6,7 @@ typedef struct Node
     struct Node *Next;
 } node;
 
-node *head = NULL, *new, *current, *temp;
+node *head = NULL, *new, *current, *temp, *prev;
 
 void create()
 {
@@ -45,32 +45,25 @@ void insert()
     int c, p;
     printf("Data to be inserted \n1. At the Top\n2. At the Bottom\n3. In Between\nChoose(1/2/3): ");
     scanf("%d", &c);
+    new = (struct Node *)malloc(sizeof(struct Node));
+    printf("Enter The data : ");
+    scanf("%d", &new->data);
+    new->Next = NULL;
     if (c == 1)
     {
         // Top Insert
-        new = (struct Node *)malloc(sizeof(struct Node));
-        printf("Enter The data : ");
-        scanf("%d", &new->data);
         new->Next = head;
         head = new;
     }
     else if (c == 2)
     {
         // Bottom Insert
-        new = (struct Node *)malloc(sizeof(struct Node));
-        printf("Enter The data : ");
-        scanf("%d", &new->data);
-        new->Next=NULL;
         current->Next = new;
         current = new;
     }
     else
     {
         // Between insert
-        new = (struct Node *)malloc(sizeof(struct Node));
-        printf("Enter The data : ");
-        scanf("%d", &new->data);
-        new->Next=NULL;
         printf("enter the position : ");
         scanf("%d", &p);
         for (temp = head; temp->Next != NULL; temp = temp->Next, p--)
@@ -79,24 +72,82 @@ void insert()
             {
                 new->Next = temp->Next;
                 temp->Next = new;
-                current = new;
                 break;
             }
         }
         if (p > 2)
-            printf("No enough space in the list!");
+            printf("Position Out of LinkedList!");
     }
 }
 void delete()
 {
-    
+    int c, p;
+    printf("Data to be Deleted \n1. From the Top\n2. From the Bottom\n3. In Between\nChoose(1/2/3): ");
+    scanf("%d", &p);
+    if (p == 1)
+    {
+        // Top Delete
+        temp = head;
+        head = head->Next;
+    }
+    else if (p == 2)
+    {
+        // Bottom Delete
+        for (temp = head; temp->Next != NULL; temp = temp->Next)
+        {
+            if (temp->Next->Next == NULL)
+            {
+                temp->Next = NULL;
+                temp = temp->Next;
+                break;
+            }
+        }
+    }
+    else
+    {
+        // Between Delete
+        printf("Enter the position : ");
+        scanf("%d", &p);
+        for (temp = head; temp->Next != NULL; temp = temp->Next, p--)
+        {
+            if (p == 2)
+            {
+                prev = temp;
+                temp = prev->Next;
+                prev->Next = temp->Next;
+                break;
+            }
+        }
+        if (p > 2)
+            printf("Position Out of LinkedList!");
+    }
+    free(temp);
+}
+void search()
+{
+    int srch, flag;
+    printf("Enter the element to be searched : ");
+    scanf("%d", &srch);
+    temp = head;
+    do
+    {
+        if (temp->data == srch)
+        {
+            printf("The data is found in the LinkedList!");
+            flag = 1;
+            break;
+        }
+        temp = temp->Next;
+    } while (temp->Next != NULL);
+    if (flag != 1)
+        printf("The Data is Not Found in the LinkedList!");
 }
 void main()
 {
     int c;
     while (1)
     {
-        printf("\n1. Create a LL\n2. Display the LL\n3. Insert Elements into the LL\n4. End\nChoose : ");
+        printf("\n1. Create a LL\n2. Display the LL\n3. Insert Elements into the LL\n4. Delete \n5. Search a Data\n6. End\nChoose : ");
         scanf("%d", &c);
         switch (c)
         {
@@ -110,12 +161,18 @@ void main()
             insert();
             break;
         case 4:
+            delete ();
+            break;
+        case 6:
+            break;
+        case 5:
+            search();
             break;
         default:
             printf("Instructions Unclear");
             break;
         }
-        if (c == 4)
+        if (c == 6)
             break;
     }
 }
