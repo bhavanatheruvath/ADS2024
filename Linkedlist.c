@@ -108,18 +108,26 @@ void delete()
         // Between Delete
         printf("Enter the position : ");
         scanf("%d", &p);
-        for (temp = head; temp->Next != NULL; temp = temp->Next, p--)
+        if (p == 1)
         {
-            if (p == 2)
-            {
-                prev = temp;
-                temp = prev->Next;
-                prev->Next = temp->Next;
-                break;
-            }
+            temp = head;
+            head = head->Next;
         }
-        if (p > 2)
-            printf("Position Out of LinkedList!");
+        else
+        {
+            for (temp = head; temp->Next != NULL; temp = temp->Next, p--)
+            {
+                if (p == 2)
+                {
+                    prev = temp;
+                    temp = prev->Next;
+                    prev->Next = temp->Next;
+                    break;
+                }
+            }
+            if (p > 2)
+                printf("Position Out of LinkedList!");
+        }
     }
     free(temp);
 }
@@ -138,7 +146,7 @@ void search()
             break;
         }
         temp = temp->Next;
-    } while (temp->Next != NULL);
+    } while (current!=NULL);
     if (flag != 1)
         printf("The Data is Not Found in the LinkedList!");
 }
