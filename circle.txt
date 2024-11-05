@@ -1,0 +1,5 @@
+1. Array op
+2. Merge
+3. stack using LL
+4. Queue usin LL
+5. LL Operations
